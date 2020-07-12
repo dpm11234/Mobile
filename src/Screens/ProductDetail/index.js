@@ -11,45 +11,77 @@ import {
 } from 'react-native';
 import { styles } from './styles';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
+import { environment } from '../../environment';
+import AsyncStorage from '@react-native-community/async-storage';
 
 class ProductDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             tableTitle: ['Tương thích:', 'Jack cắm:', 'Công nghệ âm thanh:',
-                'Kết nối cùng lúc:', 'Phím điều khiển:', 'Độ dài dây:', 'Trọnglượng:', 'Thương hiệu của:'],
-            tableData: [
-                ['Windows'],
-                ['USB'],
-                ['Âm thanh vòm 7.1'],
-                ['1 thiết bị'],
-                ['Mic thoạiTăng/giảm âm lượng'],
-                ['2 m'],
-                ['520g (kèm hộp)'],
-                ['Trung Quốc']
-            ]
+                'Độ dài dây:', 'Trọnglượng:'],
+        };
 
-        }
     }
 
-    clickEventListener() {
-        Alert.alert("Thành công", "Thêm sản phẩm vào giỏ hàng")
+    async clickEventListener() {
+
+        let listCartItem = await AsyncStorage.getItem('@listCartItem');
+        if (!listCartItem) {
+            listCartItem = [];
+        } else {
+            listCartItem = JSON.parse(listCartItem);
+        }
+        const item = this.props.navigation.getParam('item');
+        let check = false;
+
+        const cartItem = {
+            itemId: item.maSP,
+            name: item.tenSP,
+            thumbnailImage: `${environment.domain}/image/${item.img}`,
+            qty: 1,
+            salePrice: item.gia,
+            checked: 1,
+        };
+
+        listCartItem = listCartItem.map(_item => {
+            if (_item['itemId'] === cartItem.itemId) {
+                _item['qty'] += 1;
+                check = true;
+            }
+            return _item;
+        });
+
+        if (!check) {
+            listCartItem.push(cartItem);
+        }
+        console.log(listCartItem);
+        await AsyncStorage.setItem('@listCartItem', JSON.stringify(listCartItem));
+
     }
 
     render() {
         const state = this.state;
+        const item = this.props.navigation.getParam('item');
+        console.log(item);
+        const tableData = [];
+
+        tableData.push([item['tuongThich']]);
+        tableData.push([item['jack_cam']]);
+        tableData.push([item['congNghe']]);
+        tableData.push([`${item['kichThuoc']} m`]);
+        tableData.push([item['trongLuong']]);
+
         return (
             <ScrollView>
                 <View style={styles.container}>
                     <ScrollView>
                         <View style={{ alignItems: 'center', marginHorizontal: 30 }}>
-                            <Image style={styles.productImg} source={require('../../assets/images/tai-nghe-iphone-5.jpg')} />
-                            <Text style={styles.name}>Tai nghe iPhone</Text>
-                            <Text style={styles.price}> 40.000 đồng</Text>
+                            <Image style={styles.productImg} source={{ uri: `${environment.domain}/image/${item.img}` }} />
+                            <Text style={styles.name}>{item.tenSP}</Text>
+                            <Text style={styles.price}>{item.gia}</Text>
                             <Text style={styles.description}>
-                                Tai nghe Iphone 5/5s/5c là phiên bản tốt nhất trên thị trường tai nghe Earpods hiện nay.
-                                Tai nghe được thiết kế khá ấn tượng, chất lượng âm thanh tốt, Jack cắm chuẩn 3.5 mm bạn có thể sử dụng loại tai nghe này cho các dòng máy HTC, Sony, Samsung, LG, Nokia...
-                                Nghe hay hơn rất nhiều so với tai nghe zin của những hãng này.
+                                {item.moTa}
                             </Text>
                         </View>
                         <View style={styles.separator}></View>
@@ -70,7 +102,7 @@ class ProductDetail extends Component {
                                     <Row data={state.tableHead} flexArr={[1, 1]} style={styles.head} textStyle={styles.text} />
                                     <TableWrapper style={styles.wrapper}>
                                         <Col data={state.tableTitle} style={styles.title} heightArr={[28, 28]} textStyle={styles.text} />
-                                        <Rows data={state.tableData} flexArr={[1]} style={styles.row} textStyle={styles.text} />
+                                        <Rows data={tableData} flexArr={[1]} style={styles.row} textStyle={styles.text} />
                                     </TableWrapper>
                                 </Table>
                             </View>

@@ -9,37 +9,26 @@ import {
 import Home from '../Home';
 import ProductDetail from '../ProductDetail';
 import Cart from '../Cart';
+import Products from '../Products';
 
-const HomeStack = createStackNavigator(
-    {
-        Home: { screen: Home },
-    }
-);
-
-const CartStack = createStackNavigator(
-    {
-        Cart: { screen: Cart },
-    }
-);
-
-const ProductDetailStack = createStackNavigator(
-    {
-        ProductDetail: { screen: ProductDetail },
-    }
-);
+const Profile = () => {
+    return <View></View>
+}
 
 const LaunchStack = createBottomTabNavigator(
     {
-        Home: { screen: HomeStack },
+        Home: { screen: Home },
         ProductDetail: {
-            screen: ProductDetailStack,
+            screen: ProductDetail,
             navigationOptions: {
                 tabBarButtonComponent: () => {
                     return <View />;
                 },
             },
         },
-        Cart: { screen: CartStack },
+        Products: { screen: Products },
+        Cart: { screen: Cart },
+        Profile: { screen: Profile },
     }
 );
 

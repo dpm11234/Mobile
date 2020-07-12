@@ -34,6 +34,7 @@ const AppContainer = createAppContainer(AppNavigation);
 const App = () => {
     return (
         <>
+            <StatusBar backgroundColor="red" />
             <AppContainer />
         </>
     );
