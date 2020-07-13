@@ -10,10 +10,7 @@ import Home from '../Home';
 import ProductDetail from '../ProductDetail';
 import Cart from '../Cart';
 import Products from '../Products';
-
-const Profile = () => {
-    return <View></View>
-}
+import Profile from '../Profile';
 
 const LaunchStack = createBottomTabNavigator(
     {

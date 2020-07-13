@@ -14,7 +14,7 @@ import { ProductService } from '../../services';
 import { environment } from '../../environment';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const productWidth = (screenWidth - 50) / 2;
+const productWidth = (screenWidth - 40) / 2;
 const productImageHeight = (productWidth / 380) * 450;
 class Products extends Component {
 
@@ -51,7 +51,7 @@ class Products extends Component {
                     </View>
                     <View>
                         <Text style={styles.productName} >{item.tenSP}</Text>
-                        <Text style={styles.productPrice}>Giá: {item.gia}</Text>
+                        <Text style={styles.productPrice}>{item.gia} VND</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -77,7 +77,6 @@ export default Products;
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#fff',
-        margin: 10,
         shadowColor: '#2E272B',
         shadowOffset: { width: 0, height: 3 },
         shadowOpacity: 0.3,
@@ -100,14 +99,15 @@ const styles = StyleSheet.create({
         flexWrap: "wrap"
     },
     productContainer: {
-        marginTop: 20,
+        marginTop: 10,
+        marginBottom:10,
         width: productWidth,
         borderRadius: 20,
-        elevation: 1,
+        elevation: 10,
         backgroundColor: '#F5F5F5',
     },
     productImage: {
-        marginTop: 1,
+        marginTop: 3,
         marginLeft: 4,
         width: productWidth - 8,
         height: productImageHeight - 10,
@@ -117,12 +117,17 @@ const styles = StyleSheet.create({
     },
     productName: {
         marginLeft: 10,
-        fontSize: 18,
+        fontSize: 15,
+        fontWeight: "bold",
         flexDirection: 'column',
     },
     productPrice: {
-        marginLeft: 10,
+        marginRight: 10,
         fontSize: 18,
-        marginBottom: 5
+        marginBottom: 5,
+        textAlign:"right",
+        fontWeight:"bold",
+        color:"orange",
+        elevation:5,
     },
 });

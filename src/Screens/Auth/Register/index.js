@@ -43,7 +43,7 @@ class index extends Component {
                             <TextInput
                                 style={styles.input}
                                 placeholder={'Full name . . .'}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(0,0,0,0.8)'}
                                 underlineColorAndroid='transparent'
                             />
                         </View>
@@ -51,7 +51,7 @@ class index extends Component {
                             <TextInput
                                 style={styles.input}
                                 placeholder={'Username . . .'}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(0,0,0,0.8)'}
                                 underlineColorAndroid='transparent'
                             />
                         </View>
@@ -60,7 +60,7 @@ class index extends Component {
                                 style={styles.input}
                                 placeholder={'Password . . .'}
                                 secureTextEntry={this.state.showPass}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(0,0,0,0.8)'}
                                 underlineColorAndroid='transparent'
                             />
                         </View >
@@ -69,7 +69,7 @@ class index extends Component {
                                 style={styles.input}
                                 placeholder={'Confirm . . .'}
                                 secureTextEntry={this.state.showPass}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(0,0,0,0.8)'}
                                 underlineColorAndroid='transparent'
                             />
                         </View >
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginTop: 10,
         opacity: 0.9,
-        fontFamily: "Raleway-Black"
+        fontFamily: "Raleway-Black",
     },
     inputContainer: {
         marginTop: 0,
@@ -130,8 +130,8 @@ const styles = StyleSheet.create({
         borderRadius: 45,
         fontSize: 16,
         paddingLeft: 45,
-        backgroundColor: 'rgba(0,0,0,0.3)',
-        color: 'rgba(255,255,255,0.9)',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        color: 'rgba(0,0,0,0.9)',
         marginHorizontal: 25,
         marginTop: 20
     },
@@ -140,21 +140,16 @@ const styles = StyleSheet.create({
         top: 20,
         left: 5,
     },
-    btneye: {
-        position: "absolute",
-        top: 40,
-        right: 50,
-    },
     btnLogin: {
         flex: 0,
         alignSelf: "center",
-        width: screenWidth - 250,
+        width: screenWidth - 150,
         height: 50,
         borderRadius: 45,
-        backgroundColor: '#44CCBB',
+        backgroundColor: 'orange',
         justifyContent: "center",
         marginTop: 20,
-        opacity: 0.7
+        elevation:10,
     },
     text: {
         color: "white",

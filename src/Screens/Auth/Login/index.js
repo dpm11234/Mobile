@@ -24,29 +24,11 @@ class index extends Component {
             press: false
         }
     }
-    // showPass = () => {
-    //     if (this.state.press == false) {
-    //         this.setState({ showPass: false, press: true })
-    //     } else {
-    //         this.setState({ showPass: true, press: false })
-    //     }
-    // }
+
 
     render() {
         return (
             <View>
-                {/* <TouchableOpacity
-                    activeOpacity={0.9}
-                    onPress={() => {
-                        this.props.navigation.navigate('Launch');
-                    }}
-                >
-                    <Text>Đăng Nhập</Text>
-                </TouchableOpacity> */}
-
-
-
-
                 {/* Login screeen */}
                 <ImageBackground source={bg} style={styles.backgroundcontainer}>
                     <KeyboardAvoidingView
@@ -55,41 +37,37 @@ class index extends Component {
                     >
                         <View style={[styles.logoContainer]}>
                             <Image source={logo} style={styles.logo} />
-                            <Text style={styles.logoText}>Login</Text>
+                            <Text style={styles.logoText}>Đăng nhập</Text>
                         </View>
 
                         <View style={styles.inputContainer}>
-                            <Icon name={'rocket'} size={28} color='rgba(255,255,255,0.7)'
+                            <Icon name={'user'} size={28} color='rgba(0,0,0,0.7)'
                                 styles={styles.inputIcon} />
                             <TextInput
                                 style={styles.input}
                                 placeholder={'Username'}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(0,0,0,0.7)'}
                                 underlineColorAndroid='transparent'
                             />
                         </View>
                         <View style={styles.inputContainer}>
-                            <Icon name={'facebook'} size={28} color={'rgba(255,255,255,0.7)'}
+                            <Icon name={'lock'} size={28} color={'rgba(0,0,0,0.7)'}
                                 styles={styles.inputIcon} />
                             <TextInput
                                 style={styles.input}
                                 placeholder={'Password'}
                                 secureTextEntry={this.state.showPass}
-                                placeholderTextColor={'rgba(255,255,255,0.7)'}
+                                placeholderTextColor={'rgba(rgba(0,0,0,0.7)'}
                                 underlineColorAndroid='transparent'
                             />
 
-                            {/* <TouchableOpacity style={styles.btneye}
-                            // onPress={this.showPass.blind(this)}
-                            >
-                                <Icon name={this.state.press == false ? 'ios-eye-outline' : 'ios-eye-off-outline'} size={26} color={'rgba(255,255,255,0.7)'}></Icon>
-                            </TouchableOpacity> */}
+
                         </View >
                         <TouchableOpacity style={styles.btnLogin} activeOpacity={0.9}
                             onPress={() => {
                                 this.props.navigation.navigate('Launch');
                             }}>
-                            <Text style={styles.text}>Login </Text>
+                            <Text style={styles.text}>Đăng nhập</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btnCreateAccount} onPress={() => {
                             this.props.navigation.navigate('Register');
@@ -97,14 +75,13 @@ class index extends Component {
                             <Text style={styles.textCreateAccount}>Create an account</Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
-                    {                   /* Skip */}
 
                 </ImageBackground >
                 <TouchableOpacity style={styles.skip}
                     onPress={() => {
                         this.props.navigation.navigate('Home');
                     }}>
-                    <Text style={styles.skipText}>Skip >   </Text>
+                    <Text style={styles.skipText}>Skip  </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -137,42 +114,38 @@ const styles = StyleSheet.create({
         fontSize: 50,
         fontWeight: "bold",
         marginTop: 10,
-        opacity: 0.7,
+        opacity: 0.9,
         fontFamily: "Raleway-Black"
     },
     inputContainer: {
-        marginTop: 0,
+
+        marginTop: 20,
+        flexDirection:"row",
+        alignItems:"center"
     },
     input: {
-        width: screenWidth - 55,
+        width: screenWidth -100,
         height: 55,
-        borderRadius: 45,
+        borderRadius: 20,
         fontSize: 16,
         paddingLeft: 45,
-        backgroundColor: 'rgba(255,255,255,0.35)',
-        color: 'rgba(255,255,255,0.9)',
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        color: 'rgba(0,0,0,0.9)',
         marginHorizontal: 25,
     },
     inputIcon: {
-        position: 'absolute',
-        top: 200,
-        left: 5,
-    },
-    btneye: {
-        position: "absolute",
-        top: 40,
-        right: 50,
+        position:"absolute",
     },
     btnLogin: {
         flex: 0,
         alignSelf: "center",
-        width: screenWidth - 250,
+        width: screenWidth - 150,
         height: 50,
         borderRadius: 45,
-        backgroundColor: '#44CCBB',
+        backgroundColor: 'orange',
         justifyContent: "center",
         marginTop: 20,
-        opacity: 0.7
+        opacity: 0.8
     },
     text: {
         color: "white",
@@ -181,7 +154,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     textCreateAccount: {
-        color: "white",
+        color: "#696969",
         textAlign: "center",
         fontSize: 15,
         marginTop: 15
@@ -194,9 +167,11 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignSelf: 'flex-end',
         marginTop: 20,
+        
     },
     skipText: {
         color: 'white',
-        fontSize: 18
+        fontSize: 18,
+        fontWeight: "bold",
     }
 });
