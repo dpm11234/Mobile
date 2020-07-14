@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, Text, StyleSheet } from 'react-native';
 
 import News from '../../components/news';
 import News1 from '../../components/news1';
@@ -16,6 +16,7 @@ const HomeScreen = ({ navigation }) => {
                     data={data}
                 />
             </View>
+            <View><Text style={styles.title}>Sản phẩm mới nhất</Text></View>
             <View style={{ marginBottom: 15 }}>
                 <News1 navigation={navigation} />
             </View>
@@ -25,3 +26,14 @@ const HomeScreen = ({ navigation }) => {
 }
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+    title: {
+        margin: 10,
+        color: "#696969",
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 15,
+        paddingLeft: 10
+    }
+})

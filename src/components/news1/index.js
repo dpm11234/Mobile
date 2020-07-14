@@ -1,3 +1,5 @@
+
+
 import React, { Component } from 'react';
 import {
     View,
@@ -57,9 +59,10 @@ export default class News1 extends Component {
                             <SanPhamItem items={item} index={index} />
                         </TouchableOpacity>
                     }
-                    keyExtractor={(item, index) => index.toString()}
+                    keyExtractor={(item, index) => index.toString()
+                    }
                 />
-            </View>
+            </View >
         );
     }
 }
@@ -67,23 +70,27 @@ export class SanPhamItem extends Component {
 
     render() {
         return (
+
             <View style={styles.quang_cao}>
-                <View style={styles.img} >
+                <View style={styles.img_item}>
                     <Image
-                        style={{ width: '80%', height: '80%' }}
+                        style={styles.img}
                         source={{ uri: `${environment.domain}/image/${this.props.items.img}` }}></Image>
 
                 </View>
                 <View style={styles.textcontent}>
-                    <Text style={styles.title}>
+                    <Text style={styles.title_1}>
                         {this.props.items.tenSP}
                     </Text>
-                    <Text style={styles.title}>
+                    <Text style={styles.title_2}>
                         {this.props.items.congNghe}
                     </Text>
-
-                </View>
-            </View>
+                    <Text style={styles.price}>
+                        {this.props.items.gia}
+                    </Text>
+                </View >
+            </View >
         );
     }
 }
+

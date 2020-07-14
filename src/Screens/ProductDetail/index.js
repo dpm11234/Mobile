@@ -8,6 +8,7 @@ import {
     ScrollView,
     FlatList,
     Button,
+    ToastAndroid
 } from 'react-native';
 import { styles } from './styles';
 import { Table, TableWrapper, Row, Rows, Col } from 'react-native-table-component';
@@ -48,12 +49,14 @@ class ProductDetail extends Component {
             if (_item['itemId'] === cartItem.itemId) {
                 _item['qty'] += 1;
                 check = true;
+                ToastAndroid.show("Thêm thành công !", ToastAndroid.SHORT);
             }
             return _item;
         });
 
         if (!check) {
             listCartItem.push(cartItem);
+            ToastAndroid.show("Thêm thành công !", ToastAndroid.SHORT);
         }
         console.log(listCartItem);
         await AsyncStorage.setItem('@listCartItem', JSON.stringify(listCartItem));

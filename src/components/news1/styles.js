@@ -1,38 +1,63 @@
+
+
 import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
 
     quang_cao: {
-        width: '100%',
+        width: '95%',
         flexDirection: 'row',
-        height: 100, 
+        height: 120,
         // borderWidth: 1 ,
         // backgroundColor: "white",
-        
-     },
-     img:{
-        flex: 1 ,
+        marginBottom: 10,
+        backgroundColor: "#fff",
+        alignSelf: "center",
+        borderRadius: 20,
+        elevation: 3
+    },
+    img_item: {
+        flex: 1,
+        paddingTop: 1,
         width: '50%',
-        height:'100%' ,
-        paddingLeft:30,
-        paddingTop:20,
+        height: '100%',
+        textAlign: "center",
         textAlignVertical: 'center',
-        borderWidth: 1 ,
         borderRadius: 15,
-        borderColor: 'red',
-        
-     },
-  
-    title:{
-        color: 'black',
+    },
+    img: {
+        width: '100%', height: '100%',
+        borderRadius: 15,
+    },
+
+    title_1: {
+        color: '#000',
         // textAlign: "center",
-      padding: 2, 
+        marginTop: 10,
+        fontSize: 15,
+        fontWeight: "bold",
+        marginLeft: 10,
+    },
+    title_2: {
+        color: 'darkgray',
+        // textAlign: "center",
+        marginTop: 10,
         fontSize: 14,
         marginLeft: 10,
-    }, 
-    textcontent:{
+    },
+    textcontent: {
         flex: 1,
         width: '50%',
-        height:'100%',
-      
+        height: '100%',
+
+    },
+    price: {
+        color: "orangered",
+        marginTop: 10,
+        marginRight: 16,
+        alignSelf: "flex-end",
+        fontSize: 16,
+        fontWeight: "bold"
     }
-}); 
+
+});
+

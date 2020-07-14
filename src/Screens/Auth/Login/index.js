@@ -4,7 +4,7 @@ import {
     ImageBackground,
     Image,
     TextInput,
-    KeyboardAvoidingView, Alert
+    KeyboardAvoidingView, Alert, ToastAndroid
 } from 'react-native';
 import bg from '../../../assets/images/login-bg.jpg';
 import logo from '../../../assets/images/login-logo.jpg';
@@ -22,18 +22,18 @@ class index extends Component {
         this.state = {
             username: "",
             password: "",
-            checkLogin: 0
+            checkLogin: false
         }
     }
     _onSubmit = () => {
         if (this.state.username != "") {
             if (this.state.password != "") {
-                Alert.alert("thong bao", "khong null")
+                ToastAndroid.show("Success: " + this.state.username + this.state.password, ToastAndroid.SHORT);
             } else {
-                Alert.alert("Thông báo", "Hãy điền mật khẩu")
+                ToastAndroid.show("Hãy nhập mật khẩu !", ToastAndroid.SHORT);
             }
         } else {
-            Alert.alert("Thông báo", "Hãy điền tài khoản")
+            ToastAndroid.show("Hãy nhập tài khoản !", ToastAndroid.SHORT);
         }
 
     }
