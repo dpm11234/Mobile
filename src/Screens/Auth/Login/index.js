@@ -4,7 +4,7 @@ import {
     ImageBackground,
     Image,
     TextInput,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, Alert
 } from 'react-native';
 import bg from '../../../assets/images/login-bg.jpg';
 import logo from '../../../assets/images/login-logo.jpg';
@@ -20,11 +20,23 @@ class index extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPass: true,
-            press: false
+            username: "",
+            password: "",
+            checkLogin: 0
         }
     }
+    _onSubmit = () => {
+        if (this.state.username != "") {
+            if (this.state.password != "") {
+                Alert.alert("thong bao", "khong null")
+            } else {
+                Alert.alert("Thông báo", "Hãy điền mật khẩu")
+            }
+        } else {
+            Alert.alert("Thông báo", "Hãy điền tài khoản")
+        }
 
+    }
 
     render() {
         return (
@@ -45,9 +57,11 @@ class index extends Component {
                                 styles={styles.inputIcon} />
                             <TextInput
                                 style={styles.input}
-                                placeholder={'Username'}
+                                placeholder={'Tài khoản . . . '}
                                 placeholderTextColor={'rgba(0,0,0,0.7)'}
                                 underlineColorAndroid='transparent'
+                                value={this.state.username}
+                                onChangeText={(username) => this.setState({ username: username })}
                             />
                         </View>
                         <View style={styles.inputContainer}>
@@ -55,24 +69,24 @@ class index extends Component {
                                 styles={styles.inputIcon} />
                             <TextInput
                                 style={styles.input}
-                                placeholder={'Password'}
-                                secureTextEntry={this.state.showPass}
+                                placeholder={'Mật khẩu . . '}
+                                secureTextEntry={true}
                                 placeholderTextColor={'rgba(rgba(0,0,0,0.7)'}
                                 underlineColorAndroid='transparent'
+                                value={this.state.password}
+                                onChangeText={(password) => this.setState({ password: password })}
                             />
 
 
                         </View >
                         <TouchableOpacity style={styles.btnLogin} activeOpacity={0.9}
-                            onPress={() => {
-                                this.props.navigation.navigate('Launch');
-                            }}>
+                            onPress={this._onSubmit}>
                             <Text style={styles.text}>Đăng nhập</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.btnCreateAccount} onPress={() => {
                             this.props.navigation.navigate('Register');
                         }}>
-                            <Text style={styles.textCreateAccount}>Create an account</Text>
+                            <Text style={styles.textCreateAccount}>Chưa có tài khoản? Tạo mới</Text>
                         </TouchableOpacity>
                     </KeyboardAvoidingView>
 
@@ -81,7 +95,7 @@ class index extends Component {
                     onPress={() => {
                         this.props.navigation.navigate('Home');
                     }}>
-                    <Text style={styles.skipText}>Skip  </Text>
+                    <Text style={styles.skipText}>Bỏ qua  </Text>
                 </TouchableOpacity>
             </View>
         );
@@ -120,11 +134,11 @@ const styles = StyleSheet.create({
     inputContainer: {
 
         marginTop: 20,
-        flexDirection:"row",
-        alignItems:"center"
+        flexDirection: "row",
+        alignItems: "center"
     },
     input: {
-        width: screenWidth -100,
+        width: screenWidth - 100,
         height: 55,
         borderRadius: 20,
         fontSize: 16,
@@ -132,9 +146,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.7)',
         color: 'rgba(0,0,0,0.9)',
         marginHorizontal: 25,
+
     },
     inputIcon: {
-        position:"absolute",
+        position: "absolute",
+
     },
     btnLogin: {
         flex: 0,
@@ -142,10 +158,11 @@ const styles = StyleSheet.create({
         width: screenWidth - 150,
         height: 50,
         borderRadius: 45,
-        backgroundColor: 'orange',
+        backgroundColor: 'darkorange',
         justifyContent: "center",
         marginTop: 20,
-        opacity: 0.8
+        opacity: 0.8,
+        elevation: 10
     },
     text: {
         color: "white",
@@ -167,7 +184,7 @@ const styles = StyleSheet.create({
         position: "absolute",
         alignSelf: 'flex-end',
         marginTop: 20,
-        
+
     },
     skipText: {
         color: 'white',

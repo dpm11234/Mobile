@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     productContainer: {
         marginTop: 10,
-        marginBottom:10,
+        marginBottom: 10,
         width: productWidth,
         borderRadius: 20,
         elevation: 10,
@@ -125,9 +125,9 @@ const styles = StyleSheet.create({
         marginRight: 10,
         fontSize: 18,
         marginBottom: 5,
-        textAlign:"right",
-        fontWeight:"bold",
-        color:"orange",
-        elevation:5,
+        textAlign: "right",
+        fontWeight: "bold",
+        color: "orangered",
+        elevation: 5,
     },
 });

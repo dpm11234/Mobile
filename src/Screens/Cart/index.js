@@ -12,6 +12,7 @@ import {
     ActivityIndicator,
     TextInput,
     Alert,
+    Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
@@ -19,7 +20,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommu
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationEvents } from 'react-navigation';
 
-
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 class CartScreen extends Component {
 
     constructor(props) {
@@ -49,12 +51,12 @@ class CartScreen extends Component {
 
     deleteHandler = (index) => {
         Alert.alert(
-            'Are you sure you want to delete this item from your cart?',
+            'Bạn có chắc muốn xóa sản phẩm khỏi giỏ hàng ? ',
             '',
             [
-                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'Thoát', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
-                    text: 'Delete', onPress: () => {
+                    text: 'Xóa', onPress: () => {
                         let updatedCart = this.state.cartItems;
                         updatedCart.splice(index, 1);
                         this.setState(updatedCart, async () => {
@@ -112,12 +114,12 @@ class CartScreen extends Component {
                 <NavigationEvents
                     onDidFocus={() => this.loadCartItem()}
                 />
-                <View style={{ flexDirection: 'row', backgroundColor: '#fff', marginBottom: 10 }}>
+                <View style={{ flexDirection: 'row', backgroundColor: 'darkorange', marginBottom: 10 }}>
                     <View style={[styles.centerElement, { width: 50, height: 50 }]}>
-                        <Ionicons name="ios-cart" size={25} color="#000" />
+                        <Ionicons name="ios-cart" size={25} color="#fff" />
                     </View>
-                    <View style={[styles.centerElement, { height: 50 }]}>
-                        <Text style={{ fontSize: 18, color: '#000' }}>Shopping Cart</Text>
+                    <View style={[styles.centerElement, { height: 50, }]}>
+                        <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Giỏ hàng</Text>
                     </View>
                 </View>
 
@@ -127,11 +129,14 @@ class CartScreen extends Component {
                             <ActivityIndicator size="large" color="#ef5739" />
                         </View>
                     ) : (
-                            <ScrollView>
+                            <ScrollView >
                                 {cartItems && cartItems.map((item, i) => (
                                     <View
                                         key={i}
-                                        style={{ flexDirection: 'row', backgroundColor: '#fff', marginBottom: 2, height: 120 }}>
+                                        style={{
+                                            flexDirection: 'row', backgroundColor: '#fff', marginBottom: 10, height: 120,
+                                            //  width: screenWidth - 10, alignSelf: "center", borderRadius: 15, elevation: 5
+                                        }}>
                                         <View style={[styles.centerElement, { width: 60 }]}>
                                             <TouchableOpacity style={[styles.centerElement, { width: 32, height: 32 }]} onPress={() => this.selectHandler(i, item.checked)}>
                                                 <Ionicons name={item.checked === 1 ? 'ios-checkmark-circle' : 'ios-checkmark-circle-outline'} size={25} color={item.checked === 1 ? '#0faf9a' : '#aaaaaa'} />
@@ -139,12 +144,12 @@ class CartScreen extends Component {
                                         </View>
                                         <View style={{ flexDirection: 'row', flexGrow: 1, flexShrink: 1, alignSelf: 'center' }}>
                                             <TouchableOpacity onPress={() => {/*this.props.navigation.navigate('ProductDetails', {productDetails: item})*/ }} style={{ paddingRight: 10 }}>
-                                                <Image source={{ uri: item.thumbnailImage }} style={[styles.centerElement, { height: 60, width: 60, backgroundColor: '#eeeeee' }]} />
+                                                <Image source={{ uri: item.thumbnailImage }} style={[styles.centerElement, { height: 80, width: 80, backgroundColor: '#eeeeee' }]} />
                                             </TouchableOpacity>
                                             <View style={{ flexGrow: 1, flexShrink: 1, alignSelf: 'center' }}>
                                                 <Text numberOfLines={1} style={{ fontSize: 15 }}>{item.name}</Text>
                                                 <Text numberOfLines={1} style={{ color: '#8f8f8f' }}>{item.color ? 'Variation: ' + item.color : ''}</Text>
-                                                <Text numberOfLines={1} style={{ color: '#333333', marginBottom: 10 }}>${item.qty * item.salePrice}</Text>
+                                                <Text numberOfLines={1} style={{ color: '#333333', marginBottom: 10, paddingLeft: 10 }}>{item.qty * item.salePrice} VND</Text>
                                                 <View style={{ flexDirection: 'row' }}>
                                                     <TouchableOpacity onPress={() => this.quantityHandler('less', i)} style={{ borderWidth: 1, borderColor: '#cccccc' }}>
                                                         <MaterialIcons name="remove" size={22} color="#cccccc" />
@@ -177,16 +182,16 @@ class CartScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ flexDirection: 'row', flexGrow: 1, flexShrink: 1, justifyContent: 'space-between', alignItems: 'center' }}>
-                                <Text>Select All</Text>
+                                <Text>Chọn tất cả</Text>
                                 <View style={{ flexDirection: 'row', paddingRight: 20, alignItems: 'center' }}>
-                                    <Text style={{ color: '#8f8f8f' }}>SubTotal: </Text>
-                                    <Text>${this.subtotalPrice().toFixed(2)}</Text>
+                                    <Text style={{ color: '#8f8f8f' }}>Tổng tiền: </Text>
+                                    <Text>{this.subtotalPrice()} VND</Text>
                                 </View>
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', height: 32, paddingRight: 20, alignItems: 'center' }}>
-                            <TouchableOpacity style={[styles.centerElement, { backgroundColor: '#0faf9a', width: 100, height: 25, borderRadius: 5 }]} onPress={() => console.log('test')}>
-                                <Text style={{ color: '#ffffff' }}>Checkout</Text>
+                            <TouchableOpacity style={[styles.centerElement, { backgroundColor: '#EE4D2D', width: 100, height: 30, borderRadius: 5 }]} onPress={() => console.log('test')}>
+                                <Text style={{ color: '#ffffff', fontWeight: "bold" }}>Thanh toán</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
