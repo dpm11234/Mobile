@@ -7,11 +7,42 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-
+  AsyncStorage
 } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 class Profile extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {}
+    }
+
+    this.checkLogin();
+    this.getUser();
+  }
+
+  checkLogin = async () => {
+    const isLogin = await AsyncStorage.getItem('isLogin');
+    if (!isLogin) {
+      this.props.navigation.navigate('Login');
+    }
+  }
+
+  getUser = async () => {
+    const user = await AsyncStorage.getItem('user');
+    if (user) {
+      this.setState({ user: JSON.parse(user) });
+    }
+  }
+
+  logout = async () => {
+    await AsyncStorage.removeItem('user');
+    await AsyncStorage.removeItem('isLogin');
+    this.props.navigation.navigate('Login');
+  }
 
   render() {
     return (
@@ -24,11 +55,10 @@ class Profile extends Component {
 
           <View style={styles.body}>
             <View style={styles.bodyContent}>
-              <Text style={styles.name}>John Doe</Text>
-              <Text style={styles.text}>Tài khoản: Hiếu Lan</Text>
-              <Text style={styles.text}>Số điện thoại: 0909090909</Text>
-              <Text style={styles.text}>Địa chỉ: TPHCM</Text>
-              <TouchableOpacity style={styles.buttonLogin}>
+              <Text style={styles.name}>{this.state.user.tenKH}</Text>
+              <Text style={styles.text}>Số điện thoại: {this.state.user.sdt}</Text>
+              <Text style={styles.text}>Địa chỉ: {this.state.user.diaChi}</Text>
+              <TouchableOpacity style={styles.buttonLogin} onPress={() => this.logout()}>
                 <Text style={styles.ButtonText}>Log out</Text>
               </TouchableOpacity>
             </View>

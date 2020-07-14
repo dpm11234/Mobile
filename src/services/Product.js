@@ -8,11 +8,13 @@ const getAll = () => {
 const getTop5 = () => {
     return axios.get(`${environment.api}/products/top5`);
 };
-const Login = () => {
-    return axios.get(`${environment.api}/login`)
+
+const checkout = (order) => {
+    return axios.post(`${environment.api}/checkout`, order);
 }
+
 module.exports = {
     getAll,
     getTop5,
-    Login,
+    checkout
 };

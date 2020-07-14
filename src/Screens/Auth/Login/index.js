@@ -10,6 +10,10 @@ import bg from '../../../assets/images/login-bg.jpg';
 import logo from '../../../assets/images/login-logo.jpg';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import { AsyncStorage } from 'react-native';
+
+import { AuthService } from '../../../services';
+
 const screenWidth = Math.round(Dimensions.get('window').width);
 const screenHeight = Math.round(Dimensions.get('window').height);
 class index extends Component {
@@ -22,13 +26,33 @@ class index extends Component {
         this.state = {
             username: "",
             password: "",
-            checkLogin: false
+            checkLogin: false,
+            user: {}
+        }
+
+        this.checkLogin();
+    }
+
+    checkLogin = async () => {
+        const isLogin = await AsyncStorage.getItem('isLogin');
+        if (isLogin) {
+            console.log(isLogin);
+            this.props.navigation.navigate('Home');
         }
     }
-    _onSubmit = () => {
+
+    _onSubmit = async () => {
         if (this.state.username != "") {
             if (this.state.password != "") {
-                ToastAndroid.show("Success: " + this.state.username + this.state.password, ToastAndroid.SHORT);
+                // ToastAndroid.show("Success: " + this.state.username + this.state.password, ToastAndroid.SHORT);
+                const data = await AuthService.login({ SDT: this.state.username, matKhau: this.state.password });
+
+                if (data.data.success) {
+                    await AsyncStorage.setItem('isLogin', JSON.stringify(true));
+                    await AsyncStorage.setItem('user', JSON.stringify(data.data.data));
+                    this.props.navigation.navigate('Home');
+                }
+
             } else {
                 ToastAndroid.show("Hãy nhập mật khẩu !", ToastAndroid.SHORT);
             }

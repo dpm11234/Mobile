@@ -20,6 +20,8 @@ import MaterialCommunityIcons from 'react-native-vector-icons/dist/MaterialCommu
 import AsyncStorage from '@react-native-community/async-storage';
 import { NavigationEvents } from 'react-navigation';
 
+import { ProductService } from '../../services';
+
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 class CartScreen extends Component {
@@ -38,7 +40,9 @@ class CartScreen extends Component {
     selectHandler = (index, value) => {
         const newItems = [...this.state.cartItems];
         newItems[index]['checked'] = value === 1 ? 0 : 1;
-        this.setState({ cartItems: newItems });
+        this.setState({ cartItems: newItems }, async () => {
+            await AsyncStorage.setItem('@listCartItem', JSON.stringify(this.state.cartItems));
+        });
     }
 
     selectHandlerAll = (value) => {
@@ -46,7 +50,9 @@ class CartScreen extends Component {
         newItems.map((item, index) => {
             newItems[index]['checked'] = value === true ? 0 : 1;
         });
-        this.setState({ cartItems: newItems, selectAll: (value === true ? false : true) });
+        this.setState({ cartItems: newItems, selectAll: (value === true ? false : true) }, async () => {
+            await AsyncStorage.setItem('@listCartItem', JSON.stringify(this.state.cartItems));
+        });
     }
 
     deleteHandler = (index) => {
@@ -76,12 +82,13 @@ class CartScreen extends Component {
 
         if (action === 'more') {
             newItems[index]['qty'] = currentQty + 1;
-            await AsyncStorage.setItem('@listCartItem', JSON.stringify(this.state.cartItems));
         } else if (action === 'less') {
             newItems[index]['qty'] = currentQty > 1 ? currentQty - 1 : 1;
         }
 
-        this.setState({ cartItems: newItems });
+        this.setState({ cartItems: newItems }, async () => {
+            await AsyncStorage.setItem('@listCartItem', JSON.stringify(this.state.cartItems));
+        });
     }
 
     subtotalPrice = () => {
@@ -102,6 +109,55 @@ class CartScreen extends Component {
         }
     }
 
+    checkout = async () => {
+        const isLogin = await AsyncStorage.getItem('isLogin');
+        if (!isLogin) {
+            // Doi cai nay thanh toast
+            this.props.navigation.navigate('Login');
+
+
+            return;
+        }
+
+        let user = await AsyncStorage.getItem('user');
+        const cartItems = this.state.cartItems;
+
+        if (user) {
+            user = JSON.parse(user);
+        }
+
+        console.log(user, cartItems);
+        const order = {
+            maKH: user.maKH,
+            listCTHD: []
+        }
+        let checkedItem = [];
+        const uncheckItem = [];
+
+        cartItems.map(item => {
+            if (item.checked === 1) {
+                checkedItem.push(item);
+                return item;
+            }
+            uncheckItem.push(item);
+            return item;
+        });
+
+        checkedItem = checkedItem.map(item => {
+            return { maSP: item.itemId, soLuong: item.qty };
+        });
+
+        order.listCTHD = checkedItem;
+
+        const response = await ProductService.checkout(order);
+
+        if (response.data.status) {
+            await AsyncStorage.setItem('@listCartItem', JSON.stringify(uncheckItem));
+            this.setState({ cartItems: uncheckItem });
+        }
+
+    }
+
     render() {
         const styles = StyleSheet.create({
             centerElement: { justifyContent: 'center', alignItems: 'center' },
@@ -119,7 +175,7 @@ class CartScreen extends Component {
                         <Ionicons name="ios-cart" size={25} color="#fff" />
                     </View>
                     <View style={[styles.centerElement, { height: 50, }]}>
-                        <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Giỏ hàng</Text>
+                        <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Giỏ </Text>
                     </View>
                 </View>
 
@@ -190,7 +246,9 @@ class CartScreen extends Component {
                             </View>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-end', height: 32, paddingRight: 20, alignItems: 'center' }}>
-                            <TouchableOpacity style={[styles.centerElement, { backgroundColor: '#EE4D2D', width: 100, height: 30, borderRadius: 5 }]} onPress={() => console.log('test')}>
+                            <TouchableOpacity
+                                style={[styles.centerElement, { backgroundColor: '#EE4D2D', width: 100, height: 30, borderRadius: 5 }]}
+                                onPress={() => this.checkout()}>
                                 <Text style={{ color: '#ffffff', fontWeight: "bold" }}>Thanh toán</Text>
                             </TouchableOpacity>
                         </View>
