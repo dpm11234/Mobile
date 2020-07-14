@@ -44,9 +44,7 @@ class Products extends Component {
         const { listProducts } = this.state;
 
         const itemElement = listProducts.map(item => (
-            <TouchableOpacity key={item.maSP} style={styles.productContainer} onPress={() => {
-                this.props.navigation.navigate('ProductDetail', { item });
-            }}>
+            <TouchableOpacity key={item.maSP} style={styles.productContainer}>
                 <View>
                     <View>
                         <Image style={styles.productImage} source={{ uri: `${environment.domain}/image/${item.img}` }} />
@@ -92,8 +90,9 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     title: {
-        color: '#D3D3CF',
+        color: '#696969',
         fontSize: 20,
+        fontWeight: 'bold'
     },
     body: {
         flexDirection: 'row',

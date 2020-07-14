@@ -6,7 +6,8 @@ import Icon1 from 'react-native-vector-icons/FontAwesome'
 import React from 'react';
 import {
     View,
-    StyleSheet
+    StyleSheet,
+    Text
 } from 'react-native';
 
 import Home from '../Home';
@@ -20,7 +21,7 @@ const LaunchStack = createBottomTabNavigator(
     {
         Home: {
             screen: Home, navigationOptions: {
-                tabBarLabel: 'Home',
+                tabBarLabel: <Text style={{ textAlign: "center", color: 'darkorange' }}>Trang Chu</Text>,
                 tabBarIcon: () => (
                     <Icon name="ios-home" style={styles.icon} />
                 )
@@ -36,7 +37,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Products: {
             screen: Products, navigationOptions: {
-                tabBarLabel: 'Products',
+                tabBarLabel: <Text></Text>,
                 tabBarIcon: () => (
                     <Icon name="ios-list" style={styles.icon} />
                 )
@@ -44,7 +45,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Cart: {
             screen: Cart, navigationOptions: {
-                tabBarLabel: 'Cart',
+                tabBarLabel: <Text></Text>,
                 tabBarIcon: () => (
                     <Icon name="ios-cart" style={styles.icon} />
                 )
@@ -52,7 +53,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Profile: {
             screen: Profile, navigationOptions: {
-                tabBarLabel: 'Profile',
+                tabBarLabel: <Text></Text>,
                 tabBarIcon: () => (
                     <Icon1 name="user" style={styles.icon} />
                 )

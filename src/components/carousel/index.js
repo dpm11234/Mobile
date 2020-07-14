@@ -14,6 +14,7 @@ import Carousel from 'react-native-snap-carousel';
 import { ProductService } from '../../services';
 import { environment } from '../../environment';
 import { styles } from './styles';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 // const styles = StyleSheet.create({
 // imgheight: {
 // height:'30px',
@@ -74,7 +75,9 @@ class AppCarousel extends Component {
 
             <View style={styles.product_item}>
                {/* <Text>{item.tenSP}</Text> */}
-               <Image style={styles.img} source={{ uri: `${environment.domain}/image/${item.img}` }} />
+               <TouchableOpacity onPress={() => this.props.navigation.navigate('ProductDetail', { item })}>
+                  <Image style={styles.img} source={{ uri: `${environment.domain}/image/${item.img}` }} />
+               </TouchableOpacity>
             </View>
 
          );
