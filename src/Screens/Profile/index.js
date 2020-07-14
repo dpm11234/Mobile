@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-  AsyncStorage
+  AsyncStorage,ToastAndroid
 } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -28,6 +28,7 @@ class Profile extends Component {
     const isLogin = await AsyncStorage.getItem('isLogin');
     if (!isLogin) {
       this.props.navigation.navigate('Login');
+      ToastAndroid.show("Vui lòng đăng nhập!", ToastAndroid.SHORT);
     }
   }
 
@@ -42,6 +43,7 @@ class Profile extends Component {
     await AsyncStorage.removeItem('user');
     await AsyncStorage.removeItem('isLogin');
     this.props.navigation.navigate('Login');
+    ToastAndroid.show("Đã đăng xuất", ToastAndroid.SHORT);
   }
 
   render() {
@@ -59,7 +61,7 @@ class Profile extends Component {
               <Text style={styles.text}>Số điện thoại: {this.state.user.sdt}</Text>
               <Text style={styles.text}>Địa chỉ: {this.state.user.diaChi}</Text>
               <TouchableOpacity style={styles.buttonLogin} onPress={() => this.logout()}>
-                <Text style={styles.ButtonText}>Log out</Text>
+                <Text style={styles.ButtonText}>Đăng xuất</Text>
               </TouchableOpacity>
             </View>
           </View>

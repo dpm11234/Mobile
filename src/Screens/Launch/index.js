@@ -21,7 +21,7 @@ const LaunchStack = createBottomTabNavigator(
     {
         Home: {
             screen: Home, navigationOptions: {
-                tabBarLabel: <Text style={{ textAlign: "center", color: 'darkorange' }}>Trang Chu</Text>,
+                tabBarLabel: 'Trang Chủ',
                 tabBarIcon: () => (
                     <Icon name="ios-home" style={styles.icon} />
                 )
@@ -37,7 +37,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Products: {
             screen: Products, navigationOptions: {
-                tabBarLabel: <Text></Text>,
+                tabBarLabel: 'Sản phẩm',
                 tabBarIcon: () => (
                     <Icon name="ios-list" style={styles.icon} />
                 )
@@ -45,7 +45,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Cart: {
             screen: Cart, navigationOptions: {
-                tabBarLabel: <Text></Text>,
+                tabBarLabel:'Giỏ hàng',
                 tabBarIcon: () => (
                     <Icon name="ios-cart" style={styles.icon} />
                 )
@@ -53,7 +53,7 @@ const LaunchStack = createBottomTabNavigator(
         },
         Profile: {
             screen: Profile, navigationOptions: {
-                tabBarLabel: <Text></Text>,
+                tabBarLabel: 'Tài khoản',
                 tabBarIcon: () => (
                     <Icon1 name="user" style={styles.icon} />
                 )

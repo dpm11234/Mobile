@@ -36,8 +36,9 @@ class index extends Component {
     checkLogin = async () => {
         const isLogin = await AsyncStorage.getItem('isLogin');
         if (isLogin) {
-            console.log(isLogin);
+            
             this.props.navigation.navigate('Home');
+            ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
         }
     }
 
@@ -51,13 +52,14 @@ class index extends Component {
                     await AsyncStorage.setItem('isLogin', JSON.stringify(true));
                     await AsyncStorage.setItem('user', JSON.stringify(data.data.data));
                     this.props.navigation.navigate('Home');
+                    ToastAndroid.show("Đăng nhập thành công", ToastAndroid.SHORT);
                 }
 
             } else {
                 ToastAndroid.show("Hãy nhập mật khẩu !", ToastAndroid.SHORT);
             }
         } else {
-            ToastAndroid.show("Hãy nhập tài khoản !", ToastAndroid.SHORT);
+            ToastAndroid.show("Hãy nhập số điện thoại !", ToastAndroid.SHORT);
         }
 
     }
@@ -81,7 +83,7 @@ class index extends Component {
                                 styles={styles.inputIcon} />
                             <TextInput
                                 style={styles.input}
-                                placeholder={'Tài khoản . . . '}
+                                placeholder={'Số điện thoại . . . '}
                                 placeholderTextColor={'rgba(0,0,0,0.7)'}
                                 underlineColorAndroid='transparent'
                                 value={this.state.username}

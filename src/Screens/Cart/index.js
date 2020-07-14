@@ -12,7 +12,7 @@ import {
     ActivityIndicator,
     TextInput,
     Alert,
-    Dimensions
+    Dimensions,ToastAndroid
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/dist/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/dist/MaterialIcons';
@@ -112,7 +112,7 @@ class CartScreen extends Component {
     checkout = async () => {
         const isLogin = await AsyncStorage.getItem('isLogin');
         if (!isLogin) {
-            // Doi cai nay thanh toast
+            ToastAndroid.show("Chưa đăng nhập vui lòng đăng nhập trước khi đặt hàng !", ToastAndroid.SHORT);
             this.props.navigation.navigate('Login');
 
 
@@ -152,6 +152,7 @@ class CartScreen extends Component {
         const response = await ProductService.checkout(order);
 
         if (response.data.status) {
+            ToastAndroid.show("Đặt hàng thành công! Cảm ơn bạn đã mua hàng", ToastAndroid.SHORT);
             await AsyncStorage.setItem('@listCartItem', JSON.stringify(uncheckItem));
             this.setState({ cartItems: uncheckItem });
         }
@@ -175,7 +176,7 @@ class CartScreen extends Component {
                         <Ionicons name="ios-cart" size={25} color="#fff" />
                     </View>
                     <View style={[styles.centerElement, { height: 50, }]}>
-                        <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Giỏ </Text>
+                        <Text style={{ fontSize: 20, color: '#fff', fontWeight: 'bold' }}>Giỏ hàng</Text>
                     </View>
                 </View>
 
@@ -249,7 +250,7 @@ class CartScreen extends Component {
                             <TouchableOpacity
                                 style={[styles.centerElement, { backgroundColor: '#EE4D2D', width: 100, height: 30, borderRadius: 5 }]}
                                 onPress={() => this.checkout()}>
-                                <Text style={{ color: '#ffffff', fontWeight: "bold" }}>Thanh toán</Text>
+                                <Text style={{ color: '#ffffff', fontWeight: "bold" }}>Đặt hàng</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

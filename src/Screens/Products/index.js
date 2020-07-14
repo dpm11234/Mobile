@@ -44,7 +44,10 @@ class Products extends Component {
         const { listProducts } = this.state;
 
         const itemElement = listProducts.map(item => (
-            <TouchableOpacity key={item.maSP} style={styles.productContainer}>
+            
+            <TouchableOpacity key={item.maSP} style={styles.productContainer} onPress={() => {
+                this.props.navigation.navigate('ProductDetail', { item });
+            }}>
                 <View>
                     <View>
                         <Image style={styles.productImage} source={{ uri: `${environment.domain}/image/${item.img}` }} />
