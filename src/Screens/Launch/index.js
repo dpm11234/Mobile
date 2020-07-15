@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon1 from 'react-native-vector-icons/FontAwesome'
+import Icon2 from 'react-native-vector-icons/FontAwesome5'
 import React from 'react';
 import {
     View,
@@ -15,6 +16,8 @@ import ProductDetail from '../ProductDetail';
 import Cart from '../Cart';
 import Products from '../Products';
 import Profile from '../Profile';
+import Bill from '../Bill';
+import HoaDonDetail from '../HoadonDetail';
 import { color } from 'react-native-reanimated';
 
 const LaunchStack = createBottomTabNavigator(
@@ -45,11 +48,27 @@ const LaunchStack = createBottomTabNavigator(
         },
         Cart: {
             screen: Cart, navigationOptions: {
-                tabBarLabel:'Giỏ hàng',
+                tabBarLabel: 'Giỏ hàng',
                 tabBarIcon: () => (
                     <Icon name="ios-cart" style={styles.icon} />
                 )
             }
+        },
+        Bill: {
+            screen: Bill, navigationOptions: {
+                tabBarLabel: 'Hóa đơn',
+                tabBarIcon: () => (
+                    <Icon2 name="file-invoice" style={styles.icon} />
+                )
+            }
+        },
+        InvoiceDetail: {
+            screen: HoaDonDetail,
+            navigationOptions: {
+                tabBarButtonComponent: () => {
+                    return <View />;
+                },
+            },
         },
         Profile: {
             screen: Profile, navigationOptions: {
@@ -66,7 +85,7 @@ export default LaunchStack;
 
 const styles = StyleSheet.create({
     icon: {
-        color: "orange",
+        color: "orangered",
         fontSize: 25
     }
 })

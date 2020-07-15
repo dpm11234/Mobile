@@ -8,72 +8,74 @@ import {
     ScrollView,
     ImageBackground,
 } from 'react-native';
+import { environment } from '../../environment';
+import { BillService } from '../../services';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 class HoaDonDetail extends Component {
     constructor(props) {
         super(props);
+        const hd = this.props.navigation.getParam('item');
         this.state = {
+            mahoadon: hd.maHD,
+            total: 0,
             detailHoadon: [],
         };
+
+    }
+    invoiceDetail = async () => {
+
+        const data = await BillService.invoiceDetail(this.state.mahoadon);
+        if (data.data.success) {
+
+            this.setState({ detailHoadon: data.data['data'] }, () => {
+
+            });
+
+        } else {
+            this.setState({ detailHoadon: [] }, () => {
+
+            });
+        }
     }
     render() {
+        const detailHoadon = this.state.detailHoadon ? this.state.detailHoadon : [];
+
+
+        this.invoiceDetail();
+        const itemElement = detailHoadon.map(item => (
+            <TouchableWithoutFeedback key={item.maHD} style={styles.Container} >
+                <View style={styles.Product}>
+                    <View style={{ flex: 1, width: '100%' }}>
+                        <Text style={styles.ProductName}>{item.tenSP}</Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', }}>
+                        <View style={{ flex: 1, alignItems: 'center', }}>
+                            <Text style={styles.ProductCount}>Số lượng: {item.soLuong} </Text>
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'flex-end', right: 10 }}>
+                            <Text style={styles.ProductPrice}>{item.gia}</Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableWithoutFeedback >
+
+        ));
+
         return (
             <ScrollView>
 
-                <View style={styles.Inf}>
-                    <Text style={styles.Inf_top}> Mã đơn hàng: 101001</Text>
-                    <Text style={styles.Inf_in}> Ngày đặt hàng: 30/06/2020 </Text>
-                    <Text style={[styles.Inf_in, { marginBottom: 10 }]}> Trạng thái: Đã thanh toán</Text>
-                </View>
-
-                <View style={styles.Inf}>
-                    <Text style={styles.Inf_top}> Địa chỉ người nhận</Text>
-                    <Text style={styles.Inf_in}> Lê Thị Lan </Text>
-                    <Text style={styles.Inf_in}> 0123456312</Text>
-                    <Text style={[styles.Inf_in, { marginBottom: 10 }]}> TPHCM</Text>
-                </View>
 
                 <View style={styles.LableCTHD}>
                     <Text style={styles.textCTHD}> Thông tin đơn hàng </Text>
                 </View>
 
                 <View>
-                    <View style={styles.Product}>
-                        <View style={{ flex: 1, width: 200 }}>
-                            <Text style={styles.ProductName}>Tai nghe Iphone 5 </Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', }}>
-                            <View style={{ flex: 1, alignItems: 'center', }}>
-                                <Text style={styles.ProductCount}>1 </Text>
-                            </View>
-                            <View style={{ flex: 1, alignItems: 'flex-end', right: 10 }}>
-                                <Text style={styles.ProductPrice}> 500000</Text>
-                            </View>
-                        </View>
-                    </View>
+                    {itemElement}
 
-                    <View style={styles.Product}>
-                        <View style={{ flex: 1, width: 200 }}>
-                            <Text style={styles.ProductName}>Tôi thích loa hơn tai ngh e đó</Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', }}>
-                            <View style={{ flex: 1, alignItems: 'center', }}>
-                                <Text style={styles.ProductCount}>2 </Text>
-                            </View>
-                            <View style={styles.setright}>
-                                <Text style={styles.ProductPrice}> 1000000</Text>
-                            </View>
-                        </View>
-                    </View>
+
                 </View>
 
-                <View style={{ flex: 1, flexDirection: 'row', }}>
-                    <View>
-                        <Text style={styles.SumLabel}> Tổng cộng :</Text>
-                    </View>
-                    <View style={styles.setright}>
-                        <Text style={styles.SumPrice}> 2500000</Text>
-                    </View>
-                </View>
+
             </ScrollView >
 
         );
@@ -81,6 +83,13 @@ class HoaDonDetail extends Component {
 }
 export default HoaDonDetail;
 const styles = StyleSheet.create({
+
+    Container: {
+        flex: 1,
+        width: '95%',
+        alignSelf: 'center',
+        height: '35%',
+    },
 
     Inf: {
         marginBottom: 10,
@@ -116,7 +125,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#E8ECEB',
         borderBottomWidth: 1,
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         marginTop: 2,
         elevation: 2,
         backgroundColor: '#FEFFFF',
@@ -126,17 +135,22 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontWeight: "bold",
         flexDirection: 'column',
-        fontSize: 25,
+        fontSize: 20,
         marginBottom: 10,
-        marginLeft: 5
+        marginLeft: 5,
+        color: '#696969'
     },
     ProductCount: {
-        marginTop: 10,
+        margin: 10,
         fontSize: 23,
     },
     ProductPrice: {
         marginTop: 10,
-        fontSize: 23,
+        fontSize: 20,
+        color: 'orangered',
+        fontWeight: "bold",
+
+
     },
     SumLabel: {
         fontSize: 30,

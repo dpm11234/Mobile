@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-  AsyncStorage,ToastAndroid
+  AsyncStorage, ToastAndroid
 } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -114,12 +114,12 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 30,
     paddingBottom: 10,
-    color: "#696969",
+    color: "#000",
     fontWeight: "600",
     textAlign: "center"
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#696969",
     marginTop: 10,
     padding: 10,

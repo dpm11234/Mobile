@@ -32,6 +32,8 @@ class CartScreen extends Component {
             selectAll: false,
             cartItemsIsLoading: false,
             cartItems: [],
+            user:{}
+            
         };
 
         this.loadCartItem();
@@ -109,16 +111,15 @@ class CartScreen extends Component {
         }
     }
 
+
+
     checkout = async () => {
         const isLogin = await AsyncStorage.getItem('isLogin');
         if (!isLogin) {
-            ToastAndroid.show("Chưa đăng nhập vui lòng đăng nhập trước khi đặt hàng !", ToastAndroid.SHORT);
+            ToastAndroid.show("Bạn chưa đăng nhập vui lòng đăng nhập trước khi đặt hàng!", ToastAndroid.SHORT);
             this.props.navigation.navigate('Login');
-
-
             return;
         }
-
         let user = await AsyncStorage.getItem('user');
         const cartItems = this.state.cartItems;
 
